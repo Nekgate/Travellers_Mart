@@ -1,0 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for descrip in descrip %}
+        <p>{{ descrip.description }}</p>
+    {% endfor %}
+{% endblock content %}

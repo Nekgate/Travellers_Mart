@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for welcome in welcome %}
+        <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="#">{{ welcome.greet }}</a>
+                <small class="text-muted">{{ welcome.date_posted }}</small>
+              </div>
+              <h2><a class="article-title" href="#">{{ welcome.find }}</a></h2>
+            </div>
+          </article>
+    {% endfor %}
+{% endblock content %}
