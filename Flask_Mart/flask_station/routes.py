@@ -8,19 +8,6 @@ from flask_station.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-descrip = [
-    {
-        'description': 'Welcome to TravellersMart. This web application aims to provide travellers and foreigners with a seamless platform to purchase a wide range of items, from meals to essentials, in unfamiliar locations, regardless of language barriers. This initiative addresses common travel obstacles by offering a user-friendly solution to efficiently meet their needs.'
-    }
-]
-
-welcome = [
-    {
-        'greet': 'Welcome to Travellers Mart',
-        'find': 'Feel free to search for your desired items'
-    }
-]
-
 posts = [
     {
         'merchant': 'Benedict Nathaniel',
@@ -35,32 +22,26 @@ posts = [
         'date_posted': 'April 4th, 2024'
     }
 ]
-look = [
-    {
-        'check': 'Coming Soon!',
-    }
-]
-
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('home.html', welcome=welcome)
+    return render_template('home.html', posts=posts)
 
 
 @app.route('/buy')
 def buy():
-    return render_template('buy.html', posts=posts)
+    return redirect(url_for('home'))
 
 
 @app.route('/sell')
 def sell():
-    return redirect(url_for('buy'))
+    return redirect(url_for('home'))
 
 
 @app.route('/search')
 def search():
-    return render_template('search.html', look=look)
+    return render_template('search.html')
 
 
 @app.route('/support')
@@ -70,7 +51,7 @@ def support():
 
 @app.route('/about')
 def about():
-    return render_template('about.html', title='About', descrip=descrip)
+    return render_template('about.html', title='About')
 
 
 @app.route('/register', methods=['GET', 'POST'])
