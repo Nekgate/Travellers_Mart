@@ -1,4 +1,96 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Sell!</h1>
+    <div class ="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"> Sell legally</legend>
+                <div class="form-group">
+                    {{ form.item_name.label(class="form-control-label") }}
+
+                    {% if form.item_name.errors %}
+                        {{ form.item_name(class="form-control form-control-label-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.item_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.item_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.price.label(class="form-control-label") }}
+                    {% if form.price.errors %}
+                        {{ form.price(class="form-control form-control-label-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.price.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.price(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.available_online.label(class="form-control-label") }}
+                    {% if form.available_online.errors %}
+                        {{ form.available_online(class="form-control form-control-label-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.available_online.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.available_online(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.seller_name.label(class="form-control-label") }}
+                    {% if form.seller_name.errors %}
+                        {{ form.seller_name(class="form-control form-control-label-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.seller_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.seller_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+	<div class="form-group">
+                    {{ form.seller_email.label(class="form-control-label") }}
+                    {% if form.seller_email.errors %}
+                        {{ form.seller_email(class="form-control form-control-label-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.seller_email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.seller_email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+		<div class="form-group">
+                    {{ form.seller_phone.label(class="form-control-label") }}
+                    {% if form.seller_phone.errors %}
+                        {{ form.seller_phone(class="form-control form-control-label-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.seller_phone.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.seller_phone(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
 {% endblock content %}
+
