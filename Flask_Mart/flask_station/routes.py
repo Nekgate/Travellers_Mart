@@ -4,8 +4,8 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flask_station import app, db, bcrypt, mail
 from flask_station.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                 PostForm, RequestResetForm, ResetPasswordForm, SellingForm)
-from flask_station.models import User, Post, Product_for_sale
+                                 PostForm, RequestResetForm, ResetPasswordForm)
+from flask_station.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
@@ -25,19 +25,7 @@ def buy():
 
 @app.route('/sell')
 def sell():
-    form = SellingForm()
-    if form.validate_on_submit():
-        sales = Product_for_sale(product_name=form.item_name.data,
-                                 product_price=form.price.data,
-                                 available_online=form.available_online.data,
-                                 seller_name=form.seller_name.data,
-                                 seller_email=form.seller_email.data,
-                                 seller_phone=form.seller_phone.data
-                                 )
-        db.session.add(sales)
-        db.session.commit()
-        flash('Please sell legally')
-    return render_template('sell.html', title='Selling', form=form)
+    return redirect(url_for('home'))
 
 
 @app.route('/search')

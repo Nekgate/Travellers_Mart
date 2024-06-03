@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, SelectField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_station.models import User
 
@@ -78,13 +78,3 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
-
-
-class SellingForm(FlaskForm):
-    item_name = StringField('Name of product', validators=[DataRequired(), Length(min=2, max=100)])
-    price = StringField('Product price', validators=[DataRequired(), Length(min=2, max=15)])
-    available_online = SelectField('Is your product available online?', choices=[(True, 'Yes'), (False, 'No')])
-    seller_name = StringField('Seller', validators=[DataRequired(), Length(min=2, max=60)])
-    seller_email = StringField('Seller email', validators=[DataRequired(), Email()])
-    seller_phone = StringField('Seller phone', validators=[DataRequired(), Length(min=7, max=15)])
-    submit = SubmitField('Post on Mart')

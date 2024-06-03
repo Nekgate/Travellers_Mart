@@ -1,11 +1,8 @@
-import sys
-import os
 from datetime import datetime
-from itsdangerous import TimedSerializer as Serializer
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_station import db, login_manager, app
 from flask_login import UserMixin
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -46,13 +43,3 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"Post('{self.selling_item}', '{self.date_posted}')"
-
-
-class Product_for_sale():
-    id = db.Column(db.Integer, primary_key=True)
-    product_name = db.Column(db.String(100), nullable=False)
-    product_price = db.Column(db.Text, nullable=False)
-    available_online = db.Column(db.Boolean, default=False)
-    seller_name = db.Column(db.String(100), nullable=False)
-    seller_email = db.Column(db.String(100), nullable=False)
-    seller_phone = db.Column(db.String(15), nullable=False)
