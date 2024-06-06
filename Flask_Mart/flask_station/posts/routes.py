@@ -4,6 +4,7 @@ from flask_login import current_user, login_required
 from flask_station import db
 from flask_station.models import Post
 from flask_station.posts.forms import PostForm
+# from flask_station.users.utils import save_picture
 
 
 posts = Blueprint('posts', __name__)
@@ -14,7 +15,9 @@ posts = Blueprint('posts', __name__)
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(selling_item=form.title.data, price=form.content.data, merchant=current_user)
+        # picture_file = save_picture(form.picture.data)
+        # current_user.image_file = picture_file
+        post = Post(selling_item=form.title.data, content=form.content.data, price=form.price.data, image=form.image.data, merchant=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your Post has been updated!', 'success')
