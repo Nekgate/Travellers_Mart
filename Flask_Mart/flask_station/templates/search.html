@@ -1,4 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Coming Soon!</h1>
+this is my search. has the form and result. They are on the same file. I want them together. How can this be used:
+
+<div>
+  <form class="form-inline mb-3" method="POST" action="/search">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_form">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  {% if query %}
+  <div class="alert alert-info" role="alert">
+    You searched for: {{ query }}
+  </div>
+  {% else %}
+  <p>Available Products:</p>
+  {% endif %}
+
+  {% if result %}
+  <div class="row" role="alert">
+    {% for item in result %}
+    <div class="col-md-4 mb-4">
+      <div>
+
+        <div>
+          <img src="{{ url_for('static', filename='uploads/' + item.image) }}" width="200px"
+            height="200px" alt="" />
+        </div>
+       <div class="d-flex">
+        <p class="mr-5">
+          {{ item.selling_item }}
+        </p>
+        <p>${{item.price}}</p>
+       </div>
+       <div>
+        <form action="{{ url_for('main.add_to_cart', product_id=item.id) }}" method="POST">
+          <button class="btn btn-secondary">Add to Cart</button>
+      </form>
+       </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div>
+    No result matches search criteria
+  </div>
+  {% endif %}
+</div>
 {% endblock content %}
