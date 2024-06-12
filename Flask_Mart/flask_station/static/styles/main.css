@@ -89,7 +89,7 @@ body {
   }
 
   .cart-bg{
-    background-image: url("./profile_pics/empty.jpg");
+    background-image: url("../profile_pics/empty.jpg");
     height: 300px;
     background-position: center;
     background-size: cover;
@@ -119,6 +119,12 @@ img:hover{
   transform: scale(1.01);
 }
 /* about us ends */
+
+/* product */
+.btn-group button{
+  margin-bottom: 4px;
+}
+/*  */
 
 
   @media screen and (max-width: 600px) {
