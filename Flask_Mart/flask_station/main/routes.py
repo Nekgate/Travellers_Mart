@@ -1,35 +1,16 @@
 from flask import render_template, request, redirect, url_for, Blueprint, session, jsonify, flash
 from flask_station.models import Post, CartItem
 from sqlalchemy import func
-from flask import send_from_directory
 from flask_station import db
 from flask_login import current_user, login_required
-from flask_station.products.forms import ProductForm
 
-# from flask_station.search.forms import (SearchForm)
 
 
 main = Blueprint('main', __name__)
 
-# @app.route('/uploads/<filename>')
-# def uploaded_file(filename):
-#     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-@main.route('/products')
-def all_product():
-    page = request.args.get('page', 1, type=int)
-    # Query posts from the database, ordered by date posted in descending order, and paginate
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    for post in posts.items:
-        print(post.image)
-    return render_template('home.html', posts=posts)
-
-
 @main.route('/', methods=['GET', 'POST'])
 @main.route('/home')
 def home():
-    # return render_template('home.html', posts=posts)
-    # form = SearchForm()
     """
     Home page route that displays a paginated list of posts.
 
@@ -39,7 +20,8 @@ def home():
     Renders the 'home.html' template with the paginated posts.
     """
     query = ""
-    result = Post.query.order_by(Post.date_posted.desc()).paginate(page=1, per_page=5)
+    page = request.args.get('page', 1, type=int)
+    result = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     if request.method == 'POST' and "search" in request.form:
         query = request.form['search']
         if (query):
@@ -49,7 +31,7 @@ def home():
              result = Post.query.filter(
                  func.lower(Post.selling_item).contains(lw) | 
                  func.lower(Post.content).contains(lw)
-                 ).order_by(Post.date_posted.desc()).all()
+                 ).order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
              print(result)
              
              for post in result:
@@ -64,31 +46,6 @@ def buy():
     Redirects the user to the home page when they navigate to the '/buy' route.
     """
     return redirect(url_for('main.home'))
-
-
-# @main.route('/sell')
-# def sell():
-#     form = ProductForm()
-#     if form.validate_on_submit():
-#         image = form.image.data
-#         filename = image.filename
-#         uploads_dir =  'flask_station/static/uploads'
-#         print(uploads_dir)
-#         os.makedirs(uploads_dir, exist_ok=True)
-#         image.save(os.path.join(os.getcwd(), uploads_dir, filename)) 
-
-#         post = Post(selling_item=form.title.data, content=form.content.data, price=form.price.data, image=filename, merchant=current_user)
-#         db.session.add(post)
-#         db.session.commit()
-#         flash('Your Post has been updated!', 'success')
-#         return redirect(url_for('main.home'))
-#     return render_template('create_post.html', title='New Item', 
-#                            form=form, legend='New Item')
-
-
-# @main.route('/search')
-# def search():
-#     return render_template('search.html')
 
 @main.route('/support')
 def support():
@@ -137,6 +94,7 @@ def add_to_cart(product_id):
     
     db.session.commit()
     response_data = {'success': True, 'product_id': product_id}
+    flash("Product has been added to cart", 'success')
     return jsonify(response_data), 200 
 
 @main.route('/cart')
@@ -150,17 +108,70 @@ def cart():
 def get_cart_items():
     if current_user.id is None:
         flash("Login is required")
-    cart_items = CartItem.query.filter_by(user_id=current_user.id).all()
+    cart_items = CartItem.query.filter_by(user_id=current_user.id).order_by((CartItem.last_modified.desc())).all()
     cart_data = []
 
     for item in cart_items:
         product = Post.query.get(item.product_id)
-        cart_data.append({
+        if product:
+             cart_data.append({
             'id': item.id,
             'product_id': item.product_id,
             'quantity': item.quantity,
             'title': product.selling_item,
             'image': product.image,
+            'price': product.price,
+
         })
 
     return jsonify(cart_data)
+
+@main.route('/increase_quantity/<int:product_id>', methods=['POST'])
+@login_required
+def increase_quantity(product_id):
+    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+
+    if cart_item:
+        cart_item.quantity += 1
+        db.session.commit()
+        return jsonify({'success': True}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Cart item not found'}), 404
+
+@main.route('/decrease_quantity/<int:product_id>', methods=['POST'])
+@login_required
+def decrease_quantity(product_id):
+    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+    if cart_item:
+        if cart_item.quantity > 1:
+            cart_item.quantity -= 1
+            db.session.commit()
+            return jsonify({'success': True}), 200
+        else:
+            # If quantity is already 1, remove the item from the cart
+            db.session.delete(cart_item)
+            db.session.commit()
+            return jsonify({'success': True, 'message': 'Item removed from cart'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Cart item not found'}), 404
+
+@main.route('/remove_from_cart/<int:product_id>', methods=['POST'])
+@login_required
+def remove_from_cart(product_id):
+    cart_item = CartItem.query.filter_by(user_id=current_user.id, product_id=product_id).first()
+
+    if cart_item:
+        db.session.delete(cart_item)
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Item removed from cart'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Cart item not found'}), 404
+    
+
+
+@main.route('/products')
+def all_product():
+    page = request.args.get('page', 1, type=int)
+    # Query posts from the database, ordered by date posted in descending order, and paginate
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    return render_template('home.html', posts=posts)
