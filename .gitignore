@@ -1,1 +1,3 @@
 /Flask_Mart/.venv
+__pycache__/
+.venv/
