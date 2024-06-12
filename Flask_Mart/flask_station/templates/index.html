@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="col-md-8">
+  <div class="mart-content">
+    <div class="flex mb-5">
+      <div>
+        <h1 class="my-3">
+          Travellers one stop shop for all items
+        </h1>
+        <p class="mb-2"> TravellersMart provides travellers and foreigners with a seamless platform <br />to purchase a
+          wide range of
+          items, from
+          meals to essentials, in unfamiliar locations, regardless of language barriers.</p>
+      </div>
+      <!-- <img src="https://images.pexels.com/photos/2309235/pexels-photo-2309235.jpeg" class="img-fluid" alt="shop"/> -->
+
+      <div>
+      </div>
+    </div>
+    <div>
+      <form class="form-inline mb-3" method="POST" action="/">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+          {% if query %}
+          <a class="text-success text-decoration-none" href="/">Clear Search</a>
+          {% else %}
+          Search
+          {% endif %}
+        </button>
+      </form>
+      {% if query %}
+      <div class="alert alert-info" role="alert">
+        You searched for: {{ query }}
+      </div>
+      {% else %}
+      <p>Available Products:</p>
+      {% endif %}
+
+      {% if result.items %}
+      <div class="d-md-flex flex-wrap" role="alert">
+        {% for item in result.items %}
+        <div class="mb-4">
+          <div class="card">
+
+            <div>
+              <img class="card-img-top" src="{{ url_for('static', filename='post_pics/' + item.image) }}" width="200px"
+                height="200px" alt="" />
+            </div>
+            <div class="card-body">
+              <div class="d-md-flex justify-content-between">
+                <p class="mr-5">
+                  {{ item.selling_item }}
+                </p>
+                <p>${{item.price}}</p>
+              </div>
+              <div>
+                <!-- <form class="add-to-cart-form" data-product-id="{{ item.id }}" method="POST"> -->
+                <button data-product-id="{{ item.id }}" class="btn btn-secondary add-to-cart-btn" type="button">Add to
+                  Cart</button>
+                <!-- </form> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>
+        {% if query %}
+        No result matches search criteria
+        <div>
+        </div>
+        {% else %}
+        No Product Available
+        {% endif %}
+        <img class="img-fluid" src="{{ url_for('static', filename='profile_pics/empty.jpg') }}" alt="empty" />
+
+      </div>
+      {% endif %}
+      {% for page_num in result.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+      {% if result.page == page_num %}
+      <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+      <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+      {% else %}
+      ...
+      {% endif %}
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from flask_station import db
 from flask_station.models import Post
-from flask_station.posts.forms import PostForm
+from flask_station.posts.forms import CreateProductForm, UpdateProductForm
 from flask_station.users.utils import save_post_picture
 
 # Create a Blueprint named 'posts' to group related routes and views
@@ -13,16 +13,13 @@ posts = Blueprint('posts', __name__)
 @posts.route('/post/new', methods=['GET', 'POST'])
 @login_required  # Ensure the user is logged in before accessing this route
 def new_post():
-    form = PostForm()
+    # use create form to enforce image collection on create
+    form = CreateProductForm()
     if form.validate_on_submit():
         # Check if a file was uploaded
         if form.image.data:
             # Pass the file object to the save_post_picture function to handle saving
             picture_file = save_post_picture(form.image.data)
-        else:
-            # If no file was uploaded, use a default image or handle it according to your application logic
-            picture_file = 'default.jpg'
-        
         # Create a new Post object with the form data and current user as the merchant
         post = Post(selling_item=form.title.data, content=form.content.data, 
                     price=form.price.data, image=picture_file, merchant=current_user)
@@ -46,7 +43,7 @@ def update_post(post_id):
     post = Post.query.get_or_404(post_id)  # Get the post by ID or return 404 if not found
     if post.merchant != current_user:  # Ensure the current user is the owner of the post
         abort(403)  # Return 403 Forbidden if not authorized
-    form = PostForm()
+    form = UpdateProductForm()
     if form.validate_on_submit():
         post.selling_item = form.title.data  # Update the post's title
         post.content = form.content.data  # Update the post's content
@@ -74,4 +71,4 @@ def delete_post(post_id):
     db.session.delete(post)  # Delete the post from the session
     db.session.commit()  # Commit the session to the database
     flash('Your Item has been deleted!', 'success')  # Flash a success message
-    return redirect(url_for('main.home'))  # Redirect to the home page
+    return redirect(url_for('main.all_product'))  # Redirect to the home page
