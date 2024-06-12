@@ -84,7 +84,7 @@ body {
     height: 200px;
   }
   .cart-container{
-    /* max-height: 50vh; */
+    max-height: 55vh;
     overflow: auto;
   }
 
@@ -94,22 +94,27 @@ body {
     background-position: center;
     background-size: cover;
   }
+
   .card{
-    width: 14rem;
+    width: 20rem;
   }
 
   .mart-content .d-md-flex{
     gap: 14px;
   }
 /* about us starts */
-.commitment .card{
+.commitment .card, .what-we-offer .card{
   width: unset;
 }
-.what-we-offer .card-img-top{
-  height: 100px;
+.card-img-top{
   width: 100%;
   object-fit: cover;
 }
+
+.what-we-offer .card-img-top{
+  height: 100px;
+}
+
 img:hover{
   transform: scale(1.01);
 }

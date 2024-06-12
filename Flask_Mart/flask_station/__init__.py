@@ -24,7 +24,7 @@ def create_app(config_class=Config):
     mail.init_app(app)
     
     from flask_station.users.routes import users
-    from flask_station.products.routes import posts
+    from flask_station.posts.routes import posts
     from flask_station.main.routes import main
     app.register_blueprint(users)
     app.register_blueprint(posts)
