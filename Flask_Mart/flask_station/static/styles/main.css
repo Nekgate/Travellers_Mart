@@ -1,134 +1,146 @@
 body {
-    background: #fafafa;
-    color: #333333;
-    margin-top: 5rem;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    color: #444444;
-  }
-  
-  .bg-steel {
-    background-color: #5f788a;
-  }
-  
-  .site-header .navbar-nav .nav-link {
-    color: #cbd5db;
-    margin-left: 10px;
-  }
-  
-  .site-header .navbar-nav .nav-link:hover {
-    color: #ffffff;
-  }
-  
-  .site-header .navbar-nav .nav-link.active {
-    font-weight: 500;
-  }
-  
-  .content-section {
-    background: #ffffff;
-    padding: 10px 20px;
-    border: 1px solid #dddddd;
-    border-radius: 3px;
-    margin-bottom: 20px;
-  }
-  
-  .article-title {
-    color: #444444;
-  }
-  
-  a.article-title:hover {
-    color: #428bca;
-    text-decoration: none;
-  }
-  
-  .article-content {
-    white-space: pre-line;
-  }
-  
-  .article-img {
-    height: 65px;
-    width: 65px;
-    margin-right: 16px;
-  }
-  
-  .article-metadata {
-    padding-bottom: 1px;
-    margin-bottom: 4px;
-    border-bottom: 1px solid #e3e3e3
-  }
-  
-  .article-metadata a:hover {
-    color: #333;
-    text-decoration: none;
-  }
-  
-  .article-svg {
-    width: 25px;
-    height: 25px;
-    vertical-align: middle;
-  }
-  
-  .account-img {
-    height: 125px;
-    width: 125px;
-    margin-right: 20px;
-    margin-bottom: 16px;
-  }
-  
-  .account-heading {
-    font-size: 2.5rem;
-  }
-  .product-image{
-    width: 300px;
-    height: 200px;
-  }
-  .cart-container{
-    max-height: 55vh;
-    overflow: auto;
-  }
+  background: #fafafa;
+  color: #333333;
+  margin-top: 5rem;
+}
 
-  .cart-bg{
-    background-image: url("../profile_pics/empty.jpg");
-    height: 300px;
-    background-position: center;
-    background-size: cover;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #444444;
+}
 
-  .card{
-    width: 20rem;
-  }
+.bg-steel {
+  background-color: #5f788a;
+}
 
-  .mart-content .d-md-flex{
-    gap: 14px;
-  }
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+  margin-left: 10px;
+}
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.article-title {
+  color: #444444;
+}
+
+a.article-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+.article-content {
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.article-metadata a:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+.article-svg {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.product-image {
+  width: 300px;
+  height: 200px;
+}
+
+.cart-container {
+  max-height: 55vh;
+  overflow: auto;
+}
+
+.cart-bg {
+  background-image: url("../profile_pics/empty.jpg");
+  height: 300px;
+  background-position: center;
+  background-size: cover;
+}
+
+.card {
+  width: 20rem;
+}
+
+.mart-content .d-md-flex {
+  gap: 14px;
+}
+
 /* about us starts */
-.commitment .card, .what-we-offer .card{
+.commitment .card,
+.what-we-offer .card {
   width: unset;
 }
-.card-img-top{
+
+.card-img-top {
   width: 100%;
   object-fit: cover;
 }
 
-.what-we-offer .card-img-top{
+.what-we-offer .card-img-top {
   height: 100px;
 }
 
-img:hover{
+img:hover {
   transform: scale(1.01);
 }
+
 /* about us ends */
 
 /* product */
-.btn-group button{
+.btn-group button {
   margin-bottom: 4px;
 }
+
 /*  */
 
 
-  @media screen and (max-width: 600px) {
-    .card{
-      width: 100%;
-    }
+@media screen and (max-width: 600px) {
+  .card {
+    width: 100%;
   }
+}
