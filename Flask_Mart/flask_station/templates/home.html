@@ -20,8 +20,7 @@
       </div>
       <div>
         <a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">
-      <img src="{{ url_for('static', filename='post_pics/' + post.image) }}" width="300px" height="200px" style="object-fit: cover;" alt="">
-      <!-- <img src="{{post.image}}"width="300px" height="200px" alt=""> -->
+      <img src="{{ url_for('static', filename='post_pics/' + post.image) }}" class="product-img img-fluid" style="object-fit: cover;" alt="">
       <h2>{{ post.selling_item }}
       </h2>
       <p class="article-content">{{ post.content }}</p>
