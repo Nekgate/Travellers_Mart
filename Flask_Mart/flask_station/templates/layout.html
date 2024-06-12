@@ -11,6 +11,7 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css') }}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='/app/' + 'favicon.ico') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   {% if title %}
   <title>Travellers Mart - {{ title }}</title>
@@ -30,14 +31,14 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <!-- <div class="navbar-nav mr-auto"> -->
-            <!-- <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
+          <!-- <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home</a>
             <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
             <a class="nav-item nav-link" href="{{ url_for('main.all_product') }}">Products</a>
             <a class="nav-item nav-link" href="{{ url_for('main.support') }}">Contact</a> -->
 
-            <!-- <a class="nav-item nav-link" href="{{ url_for('main.buy') }}">Buy</a> -->
-            <!-- <a class="nav-item nav-link" href="{{ url_for('products.new_post') }}">Create Product</a> -->
-            <!-- <a class="nav-item nav-link" href="{{ url_for('main.search') }}">Search</a> -->
+          <!-- <a class="nav-item nav-link" href="{{ url_for('main.buy') }}">Buy</a> -->
+          <!-- <a class="nav-item nav-link" href="{{ url_for('posts.new_post') }}">Create Product</a> -->
+          <!-- <a class="nav-item nav-link" href="{{ url_for('main.search') }}">Search</a> -->
           <!-- </div> -->
           <!-- Navbar Right Side -->
           <div class="navbar-nav ml-auto">
@@ -61,44 +62,49 @@
   </header>
   <main role="main" class="container">
     <div class="row">
-      <div class="col-md-8">
-        <div >
+      <div class="col-md-12">
+        <div>
           {% with messages = get_flashed_messages(with_categories=true) %}
           {% if messages %}
           {% for category, message in messages %}
+          {{ message }}
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
         </div class="alert alert-{{ category }}">
-        {{ message }}
+      
       </div>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-      </div>
+
     </div>
-    <div class="row">
-    {% block content %}{% endblock %}
-    {% if 'about' not in request.path %}
-    <div class="col-md-4">
-      <div class="content-section">
-        <img class="img-fluid"
-          src="https://images.pexels.com/photos/953862/pexels-photo-953862.jpeg" />
-        <!-- <ul class="list-group">
+    </div>
+    <div class="row my-3">
+      {% block content %}{% endblock %}
+      {% if 'about' not in request.path %}
+      <div class="col-md-4">
+        <div class="content-section">
+          <img class="img-fluid" src="https://images.pexels.com/photos/953862/pexels-photo-953862.jpeg" />
+          <!-- <ul class="list-group">
           <li class="list-group-item list-group-item-light">Shop</li>
           <li class="list-group-item list-group-item-light">Latest Items</li>
           <li class="list-group-item list-group-item-light">Announcement</li>
           <li class="list-group-item list-group-item-light">Support</li>
         </ul> -->
-        <hr/>
-        <h6 class="my-2">Cart Contents:</h6>
-        <div id="cart-container" class="cart-container">
-          <p>Your cart is empty.</p>
-          <div class="cart-bg"></div>
-          <!-- <img src="static/profile_pics/empty.jpg" width="300" height="400" alt="no data"/> -->
+          <hr />
+          <h6 class="my-2">Cart:</h6>
+          <div class="cart-content">
+            <div id="cart-container" class="cart-container">
+              <p>Your cart is empty.</p>
+              <div class="cart-bg"></div>
+            </div>
+            <div class="my-2" id="checkout">
+              <button class="btn btn-outline-info">Checkout</button>
+            </div>
+          </div>
+
         </div>
-      
       </div>
+      {% endif %}
     </div>
-    {% endif %}
-  </div>
 
     </div>
   </main>

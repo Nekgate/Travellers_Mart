@@ -15,7 +15,22 @@ class PostForm(FlaskForm):
     price = StringField('Price', validators=[DataRequired()])
     
     # Image field for uploading an image, allows only certain file types
-    image = FileField('Image URL', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
+    image = FileField('Image URL', validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'])])
     
     # Submit button to post the form
     submit = SubmitField('Post')
+
+class BaseProductForm(FlaskForm):
+    title = StringField('Item Name', validators=[DataRequired()])
+    content = TextAreaField('Item Description', validators=[DataRequired()])
+    price = StringField('Price', validators=[DataRequired()])
+    submit = SubmitField('Post')
+
+    def __init__(self, *args, **kwargs):
+        super(BaseProductForm, self).__init__(*args, **kwargs)
+
+class CreateProductForm(BaseProductForm):
+    image = FileField('Image URL', validators=[DataRequired(), FileAllowed(['jpg', 'jpeg', 'png'])])
+
+class UpdateProductForm(BaseProductForm):
+    image = FileField('Image URL', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
