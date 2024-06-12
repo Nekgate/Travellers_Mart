@@ -34,9 +34,12 @@ function updateCartUI(cartItems) {
   var checkoutContainer = document.getElementById("checkout");
   // Clear the existing contents of the cart container
   cartContainer.innerHTML = "";
+  let amountInCart = 0
 
   if (cartItems && cartItems[0]?.title) {
     // Iterate over the cartItems array
+    amountInCart = getTotalPriceInCart(cartItems)
+    const amountInCartInDollars = `$${(amountInCart ? (Math.round(amountInCart * 100) / 100).toFixed(2) : "0.00")}`;
     cartItems.forEach(function (item) {
       // Create HTML elements to represent each cart item
       var cartItemDiv = document.createElement("div");
@@ -107,16 +110,24 @@ function updateCartUI(cartItems) {
       cartItemDiv.appendChild(removeButton);
       // cartItemDiv.appendChild(divider);
 
-
       // Append the cart item element to the cart container
       cartContainer.appendChild(cartItemDiv);
       var checkoutButton = document.createElement("button");
+     
+
       checkoutButton.classList.add("btn", "btn-outline-info")
+      checkoutButton.innerHTML = "Checkout";
 
     });
+    var checkoutPriceElem = document.getElementById("amount-in-cart");
+    checkoutPriceElem.textContent = amountInCartInDollars
+    checkoutContainer.classList.remove("d-none");
+    
+    // checkoutContainer.appendChild(checkoutPriceElem)
+    // checkoutContainer.appendChild(checkoutButton)
   } else {
     var empty = document.createElement("p");
-    checkoutContainer.innerHTML = "";
+    checkoutContainer.classList.add("d-none");
     empty.textContent = "Your cart is empty";
     cartContainer.appendChild(empty);
     var cartItemDiv = document.createElement("div");
@@ -199,4 +210,8 @@ function removeFromCart(product_id) {
       }
     })
     .catch((error) => console.error("Error:", error));
+}
+
+function getTotalPriceInCart(cartItems){
+  return cartItems.reduce((a, b) => a += +b.price * b.quantity, 0)
 }
