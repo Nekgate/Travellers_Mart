@@ -22,7 +22,11 @@ To run this project locally, follow these steps:
 
 - Clone the repository to your local machine.
 - Navigate to the project directory.
-- Intstall necessary dependencies pip install -r requirements.txt
+- Install necessary dependencies
+  
+  ```
+  pip install -r requirements.txt
+  ```
 - Run app
   ```
   export FLASK_APP=run.py
