@@ -33,7 +33,7 @@ To run this project locally, follow these steps:
   ```
    or
   ```
-   flask --app
+   flask --app run.py
   ```
 
 # Team Members:    
