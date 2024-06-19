@@ -122,12 +122,14 @@ function updateCartUI(cartItems) {
     var checkoutPriceElem = document.getElementById("amount-in-cart");
     checkoutPriceElem.textContent = amountInCartInDollars
     checkoutContainer.classList.remove("d-none");
+    checkoutContainer.classList.add("d-flex");
     
     // checkoutContainer.appendChild(checkoutPriceElem)
     // checkoutContainer.appendChild(checkoutButton)
   } else {
     var empty = document.createElement("p");
     checkoutContainer.classList.add("d-none");
+    checkoutContainer.classList.remove("d-flex");
     empty.textContent = "Your cart is empty";
     cartContainer.appendChild(empty);
     var cartItemDiv = document.createElement("div");
